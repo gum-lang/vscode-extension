@@ -1,0 +1,10 @@
+.vscode-test/
+.vscode/
+out/
+node_modules/
+tmp/
+*.ts
+!*.d.ts
+.gitignore
+.eslintrc.json
+tsconfig.json

@@ -1,0 +1,218 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Gum",
+  "scopeName": "source.gum",
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#assignment"
+    },
+    {
+      "include": "#table"
+    },
+    {
+      "include": "#list"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.gum",
+      "begin": "#",
+      "end": "$",
+      "captures": {
+        "0": {
+          "name": "punctuation.definition.comment.gum"
+        }
+      }
+    },
+    "assignment": {
+      "begin": "(?=(?:[A-Za-z_][A-Za-z0-9_]*|\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'])*')(?:\\s*\\.\\s*(?:[A-Za-z_][A-Za-z0-9_]*|\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'])*'))*\\s*=)",
+      "end": "(?<=\\n|$)",
+      "patterns": [
+        {
+          "include": "#key"
+        },
+        {
+          "include": "#operator"
+        },
+        {
+          "include": "#value"
+        }
+      ]
+    },
+    "key": {
+      "patterns": [
+        {
+          "name": "variable.other.key.gum",
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\b"
+        },
+        {
+          "include": "#quoted-key"
+        },
+        {
+          "name": "punctuation.separator.dot.gum",
+          "match": "\\."
+        }
+      ]
+    },
+    "quoted-key": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.key.gum",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.gum",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.key.gum",
+          "begin": "'",
+          "end": "'"
+        }
+      ]
+    },
+    "operator": {
+      "name": "keyword.operator.assignment.gum",
+      "match": "="
+    },
+    "value": {
+      "patterns": [
+        {
+          "include": "#multiline-quoted-string"
+        },
+        {
+          "include": "#multiline-literal-string"
+        },
+        {
+          "include": "#quoted-string"
+        },
+        {
+          "include": "#literal-string"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#null"
+        },
+        {
+          "include": "#table"
+        },
+        {
+          "include": "#list"
+        }
+      ]
+    },
+    "quoted-string": {
+      "name": "string.quoted.double.gum",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.gum",
+          "match": "\\\\(?:[\"\\\\bfnrt]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})"
+        }
+      ]
+    },
+    "multiline-quoted-string": {
+      "name": "string.quoted.triple.double.gum",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.gum",
+          "match": "\\\\(?:[\"\\\\bfnrt]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})"
+        },
+        {
+          "name": "constant.character.escape.line-continuation.gum",
+          "match": "\\\\\\s*$"
+        }
+      ]
+    },
+    "literal-string": {
+      "name": "string.quoted.single.gum",
+      "begin": "'",
+      "end": "'"
+    },
+    "multiline-literal-string": {
+      "name": "string.quoted.triple.single.gum",
+      "begin": "'''",
+      "end": "'''",
+      "patterns": [
+        {
+          "name": "constant.character.escape.line-continuation.gum",
+          "match": "\\\\\\s*$"
+        }
+      ]
+    },
+    "number": {
+      "name": "constant.numeric.gum",
+      "match": "[+-]?(?:\\d+\\.\\d*(?:[eE][+-]?\\d+)?|\\d+[eE][+-]?\\d+|\\d+)"
+    },
+    "boolean": {
+      "name": "constant.language.boolean.gum",
+      "match": "\\b(true|false)\\b"
+    },
+    "null": {
+      "name": "constant.language.null.gum",
+      "match": "\\bnull\\b"
+    },
+    "table": {
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.table.begin.gum"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.table.end.gum"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#assignment"
+        }
+      ]
+    },
+    "list": {
+      "begin": "\\[",
+      "end": "\\]",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.list.begin.gum"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.list.end.gum"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#value"
+        },
+        {
+          "name": "punctuation.separator.comma.gum",
+          "match": ","
+        }
+      ]
+    }
+  }
+}

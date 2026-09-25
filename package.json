@@ -1,0 +1,92 @@
+{
+  "name": "gum-language",
+  "displayName": "Gum Language Support",
+  "description": "Language support for the Gum markup language — syntax highlighting, linting, and formatting via LSP",
+  "version": "0.1.0",
+  "publisher": "gum-lang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gum-lang/gum-lang"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Formatters"
+  ],
+  "keywords": [
+    "gum",
+    "markup",
+    "language",
+    "lsp"
+  ],
+  "activationEvents": [
+    "onLanguage:gum"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "gum",
+        "extensions": [
+          ".gum"
+        ],
+        "aliases": [
+          "Gum"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "gum",
+        "scopeName": "source.gum",
+        "path": "./syntaxes/gum.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "Gum",
+      "properties": {
+        "gum.lsp.path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the gum-lsp binary. Leave empty to search in PATH."
+        },
+        "gum.lsp.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the Gum language server."
+        },
+        "gum.format.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable formatting via the Gum LSP."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.24.0"
+  }
+}
